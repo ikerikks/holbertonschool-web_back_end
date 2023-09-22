@@ -2,5 +2,12 @@
 
 
 def add(a: float, b: float) -> float:
-    """ sum of two numbers """
+    """
+        add two numbers
+        Arguments:
+            a: number
+            b: number
+        Returns:
+            sum of two numbers
+    """
     return float(a + b)
