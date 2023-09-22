@@ -2,15 +2,7 @@
 
 from typing import Union, Tuple
 
-"""
-    to_kv function
-    Args:
-        k: string
-        v: number
-    Returns:
-        a list with both parameters values
-"""
-
 
 def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
+    """ list of botth arguments values"""
     return (k, v * v)

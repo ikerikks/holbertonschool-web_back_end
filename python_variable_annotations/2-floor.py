@@ -2,14 +2,7 @@
 
 import math
 
-"""
-    floor function
-    Args:
-        n: float number
-    Returns:
-        floor of float number
-"""
-
 
 def floor(n: float) -> int:
+    """ floor of a number """
     return math.floor(n)
