@@ -12,7 +12,7 @@ async def measure_time(n: int, max_delay: int) -> float:
     Measure the total execution time
     '''
     start_time = time.time()
-    wait_n(n, max_delay)  # Call the wait_n function from the other module
+    await wait_n(n, max_delay)  # Call the wait_n function from the other module
     end_time = time.time()
     total_time = end_time - start_time
     return total_time / n
