@@ -7,7 +7,7 @@ from typing import Awaitable, Union
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-def task_wait_random(max_delay: int) -> asyncio.Task[Union[int, float]]:
+def task_wait_random(max_delay: int) -> asyncio.Task:
     ''''
     returns a asyncio task
     '''
