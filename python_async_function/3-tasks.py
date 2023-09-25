@@ -7,5 +7,8 @@ from typing import Awaitable
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-def task_wait_random(max_delay) -> asyncio.Task[Awaitable[float]]:
+def task_wait_random(max_delay: int) -> asyncio.Task[Awaitable[float]]:
+    ''''
+    returns a asyncio task
+    '''
     return asyncio.Task(wait_random(max_delay))
