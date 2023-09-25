@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+'''
+multiplier function
+'''
 from typing import Callable
 
 

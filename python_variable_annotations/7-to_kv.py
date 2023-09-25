@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+'''
+list function
+'''
 from typing import Union, Tuple
 
 
