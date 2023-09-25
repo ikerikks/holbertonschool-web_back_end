@@ -3,11 +3,11 @@
 tasks
 '''
 import asyncio
-from typing import Awaitable
+from typing import Awaitable, Union
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-def task_wait_random(max_delay: int) -> asyncio.Task[Awaitable[float]]:
+def task_wait_random(max_delay: int) -> asyncio.Task[Union[int, float]]:
     ''''
     returns a asyncio task
     '''
