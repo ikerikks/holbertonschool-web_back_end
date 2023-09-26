@@ -4,10 +4,10 @@ async generator
 '''
 import asyncio
 import random
-from typing import AsyncGenerator as Generator
+from typing import Generator
 
 
-async def async_generator() -> Generator[float, None]:
+async def async_generator() -> Generator[float, None, None]:
     '''
     generates a random numberAsync
     '''
