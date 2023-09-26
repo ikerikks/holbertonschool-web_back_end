@@ -22,4 +22,3 @@ if __name__ == "__main__":
     n = 5
     max_delay = 9
     asyncio.run(measure_time(n, max_delay))
-    
