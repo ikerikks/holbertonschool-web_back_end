@@ -9,5 +9,7 @@ from typing import List
 def filter_datum(
     fields: List[str], redaction: str, message: str, separator: str
 ) -> str:
+    '''filter data
+    '''
     pattern = re.compile(rf'({"|".join(fields)})=[^{separator}]+')
     return re.sub(pattern, rf"\1={redaction}", message)
