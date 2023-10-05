@@ -5,6 +5,8 @@ logger module
 import re
 from typing import List
 import logging
+import mysql.connector
+import os
 
 
 PII_FIELDS = ("name", "ssn", "email", "phone", "password")
@@ -50,3 +52,22 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+def get_db():
+    """ Connect to the MySQL database using environment variables """
+    username = os.environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    database = os.environ.get("PERSONAL_DATA_DB_NAME")
+
+    try:
+        db = mysql.connector.connect(
+            user=username,
+            password="",
+            host=host,
+            database=database
+        )
+        return db
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None
