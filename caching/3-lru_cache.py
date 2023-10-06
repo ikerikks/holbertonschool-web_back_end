@@ -5,6 +5,7 @@ from base_caching import BaseCaching
 
 
 class LRUCache(BaseCaching):
+    """ lru cache class """
     def __init__(self):
         super().__init__()
         self.access_order = []
