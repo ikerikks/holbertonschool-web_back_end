@@ -20,7 +20,7 @@ class MRUCache(BaseCaching):
             mru_key = max(self.accessed.keys(), key=lambda k: self.accessed[k])
             del self.cache_data[mru_key]
             del self.accessed[mru_key]
-            print(f"DISCARD: {mru_key}\n")
+            print(f"DISCARD: {mru_key}")
 
         # Add the new item to the cache
         self.cache_data[key] = item

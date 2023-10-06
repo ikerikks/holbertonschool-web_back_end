@@ -20,7 +20,7 @@ class LRUCache(BaseCaching):
             # Find and remove the least recently used item
             lru_key = self.access_order.pop(0)
             del self.cache_data[lru_key]
-            print(f"DISCARD: {lru_key}\n")
+            print(f"DISCARD: {lru_key}")
 
         # Add the new item to the cache
         self.cache_data[key] = item
