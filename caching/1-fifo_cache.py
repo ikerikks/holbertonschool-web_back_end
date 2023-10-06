@@ -18,7 +18,7 @@ class FIFOCache(BaseCaching):
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             removed_key = self.queue.pop(0)
             del self.cache_data[removed_key]
-            print(f"DISCARD: {removed_key}\n")
+            print(f"DISCARD: {removed_key}")
 
         self.cache_data[key] = item
         self.queue.append(key)
