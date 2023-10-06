@@ -1,3 +1,6 @@
+'''
+basic cache
+'''
 from base_caching import BaseCaching
 
 
