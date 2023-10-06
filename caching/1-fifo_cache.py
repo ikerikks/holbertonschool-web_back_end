@@ -2,6 +2,7 @@ from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):
+    """ Basic cache class """
     def __init__(self):
         super().__init__()
         self.queue = []
