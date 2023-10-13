@@ -53,7 +53,7 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid(self):
+    def _generate_uuid(self) -> str:
         new_uuid = uuid.uuid4()
         return str(new_uuid)
 
@@ -66,3 +66,4 @@ class Auth:
             return session_id
         except NoResultFound:
             return None
+            
