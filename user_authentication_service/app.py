@@ -19,10 +19,10 @@ def register_user():
         user = AUTH.register_user(email, password)
 
         response = {"email": user.email, "message": "user created"}
-        return jsonify(response), 201
+        return jsonify(response)
     except ValueError as err:
         response = {"message": "email already registered"}
-        return jsonify(response), 409
+        return jsonify(response)
 
 
 if __name__ == "__main__":
