@@ -12,13 +12,13 @@ async def measure_time(n: int, max_delay: int) -> float:
     Measure the total execution time
     '''
     start_time = time.time()
-    asyncio.run(wait_n(n, max_delay))
+    await asyncio.gather(wait_n(n, max_delay))
     end_time = time.time()
     total_time = end_time - start_time
     average_time = float(total_time / n)
     return average_time
 
-if __name__ == "__main__":
-    n = 5
-    max_delay = 9
-    asyncio.run(measure_time(n, max_delay))
+# if __name__ == "__main__":
+#     n = 5
+#     max_delay = 9
+#     asyncio.run(measure_time(n, max_delay))
