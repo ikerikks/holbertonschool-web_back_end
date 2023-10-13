@@ -51,8 +51,8 @@ class DB:
             raise NoResultFound("No user found")
 
         return user
-    
-    def update_user(self, user_id, **kwargs):
+
+    def update_user(self, user_id: int, **kwargs) -> None:
         """ Update a user password
         """
         user = self.find_user_by(id=user_id)
