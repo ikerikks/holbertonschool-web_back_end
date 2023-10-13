@@ -54,8 +54,8 @@ class Auth:
             return False
 
     def _generate_uuid(self) -> str:
-        new_uuid = uuid.uuid4()
-        return str(new_uuid)
+        new_uuid = str(uuid.uuid4())
+        return new_uuid
 
     def create_session(self, email):
         try:
