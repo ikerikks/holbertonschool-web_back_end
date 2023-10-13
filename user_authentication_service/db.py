@@ -9,7 +9,8 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 
 from user import Base, User
-from typing import Union, Dict
+from typing import Union
+
 
 class DB:
     """DB class
@@ -41,7 +42,7 @@ class DB:
 
         return new_user
 
-    def find_user_by(self, **kwargs: Dict[str, Union[str, int]]) -> User:
+    def find_user_by(self, **kwargs: Union[str, int]) -> User:
         """ Find a user
         """
         user = self._session.query(User).filter_by(**kwargs).first()
