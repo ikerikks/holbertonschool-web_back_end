@@ -51,3 +51,16 @@ class DB:
             raise NoResultFound("No user found")
 
         return user
+    
+    def update_user(self, user_id, **kwargs):
+        """ Update a user password
+        """
+        user = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if hasattr(user, key):
+                setattr(user, key, value)
+            else:
+                raise ValueError(f"Invalid attribute: {key}")
+
+        self._session.commit()
