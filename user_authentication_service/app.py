@@ -43,7 +43,7 @@ def login():
     if user is None:
         return abort(401)
 
-    return jsonify({"email": user_email, "message": "logged in"}), 200
+    return jsonify({"email": user.email, "message": "logged in"}), 200
 
 
 if __name__ == '__main__':
