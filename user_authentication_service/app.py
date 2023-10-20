@@ -55,7 +55,7 @@ def login():
 
     response = jsonify({"email": user_email, "message": "logged in"})
     response.set_cookie("session_id", session_id)
-    return response
+    return response, 200
 
 
 if __name__ == '__main__':
