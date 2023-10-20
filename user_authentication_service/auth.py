@@ -60,12 +60,15 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid():
+    def _generate_uuid() -> str:
         """Generate a new UUID
         """
         new_uuid = uuid.uuid4()
         return str(new_uuid)
-
+    
+    if __name__ == '__main__':
+        uuid_str = _generate_uuid()
+        print("Generated UUID:", uuid_str)
 
     def create_session(self, email):
         try:
@@ -77,4 +80,3 @@ class Auth:
         except NoResultFound:
             return None
     
-  
