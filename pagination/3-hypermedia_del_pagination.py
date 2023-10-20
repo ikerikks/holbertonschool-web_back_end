@@ -2,7 +2,7 @@
 """ simple pagination """
 
 import csv
-from typing import List, Dict
+from typing import List, Dict, Union
 import math
 
 
@@ -79,7 +79,8 @@ class Server:
               i: dataset[i] for i in range(len(dataset))}
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict[int, List]:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> \
+      Dict[str, Union[int, List[List[str]]]]:
         assert index is None or 0 <= index < len(
             self.__indexed_dataset
         ), "Index is out of range"
