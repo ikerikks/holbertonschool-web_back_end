@@ -50,7 +50,7 @@ def login():
     session_id = str(uuid.uuid4())
     active_sessions[session_id] = user
 
-    return jsonify({"email": user_email, "message": "logged in"})
+    return jsonify({"email": user_email, "message": "logged in"}), 200
 
 
 if __name__ == '__main__':
