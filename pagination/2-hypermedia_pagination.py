@@ -38,6 +38,7 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """Get a list of page numbers """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
@@ -52,6 +53,7 @@ class Server:
         return dataset[start:end]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+        """ Returns a dictionary """
         page_data = self.get_page(page, page_size)
         next_page_data = self.get_page(page + 1, page_size)
 
