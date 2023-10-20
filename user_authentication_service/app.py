@@ -13,11 +13,9 @@ AUTH = Auth()
 @app.route("/users", methods=["POST"])
 def register_user():
     try:
-        # Get email and password from form data
         email = request.form.get("email")
         password = request.form.get("password")
 
-        # Register the user using the Auth object
         user = AUTH.register_user(email, password)
 
         response = {"email": user.email, "message": "user created"}
@@ -49,13 +47,10 @@ def login():
     if user is None or user["password"] != user_password:
         return abort(401)
 
-    # Create a new session for the user
     session_id = str(uuid.uuid4())
     active_sessions[session_id] = user
 
-    response = make_response(jsonify({"email": user_email, "message": "logged in"}))
-    response.set_cookie("session_id", session_id)
-    return response
+    return jsonify({"email": user_email, "message": "logged in"})
 
 
 if __name__ == '__main__':
