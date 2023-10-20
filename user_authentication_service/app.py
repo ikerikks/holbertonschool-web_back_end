@@ -3,7 +3,6 @@
 """
 from flask import Flask, request, jsonify, abort,  make_response
 from auth import Auth
-import uuid
 
 
 app = Flask(__name__)
@@ -25,26 +24,21 @@ def register_user():
         return jsonify(response)
 
 
-active_sessions = {}
-
-
-@app.route('/sessions', methods=['POST'])
 def login():
     data = request.form
+    email = data.get('email')
+    password = data.get('password')
 
-    if "email" not in data or "password" not in data:
-        return abort(400)
+    if not email or not password:
+        return make_response(jsonify(message="Email and password are required"), 400)
 
-    user_email = data["email"]
-    user_password = data["password"]
-
-    user = AUTH.login_user(user_email, user_password)
-
-    if user is None:
-        return abort(401)
-
-    return jsonify({"email": user.email, "message": "logged in"}), 200
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    if AUTH.valid_login(email, password):
+        session_id = AUTH.create_session(email)
+        if session_id:
+            response = jsonify({"email": email, "message": "logged in"})
+            response.set_cookie('session_id', session_id)
+            return response
+        else:
+            abort(500)
+    else:
+        abort(401)
