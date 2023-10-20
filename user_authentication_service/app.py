@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ basic flask app
 """
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort,  make_response
 from auth import Auth
 import uuid
 
@@ -53,9 +53,9 @@ def login():
     session_id = str(uuid.uuid4())
     active_sessions[session_id] = user
 
-    response = jsonify({"email": user_email, "message": "logged in"})
+    response = make_response(jsonify({"email": user_email, "message": "logged in"}))
     response.set_cookie("session_id", session_id)
-    return response, 200
+    return response
 
 
 if __name__ == '__main__':
