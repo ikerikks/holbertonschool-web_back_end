@@ -6,7 +6,15 @@ from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from bcrypt import checkpw
+from flask import Flask, request, jsonify, abort, make_response
 import uuid
+
+
+app = Flask(__name__)
+users = [
+    {"email": "bob@bob.com", "password": "mySuperPwd"},
+]
+active_sessions = {}
 
 
 def _hash_password(password: str) -> bytes:
@@ -28,7 +36,6 @@ class Auth:
         """Register user
         """
         try:
-            # Check if a user with the given email already exists
             existing_user = self._db.find_user_by(email=email)
             if existing_user:
                 raise ValueError(f"User {email} already exists")
@@ -66,3 +73,5 @@ class Auth:
             return session_id
         except NoResultFound:
             return None
+    
+  
