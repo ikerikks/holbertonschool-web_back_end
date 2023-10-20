@@ -52,7 +52,7 @@ class Server:
 
         return dataset[start:end]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """ Retrieve a page of data from a dataset """
 
         page_data = self.get_page(page, page_size)
@@ -79,7 +79,7 @@ class Server:
               i: dataset[i] for i in range(len(dataset))}
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict[int, List]:
         assert index is None or 0 <= index < len(
             self.__indexed_dataset
         ), "Index is out of range"
