@@ -25,10 +25,6 @@ def register_user():
         return jsonify(response)
 
 
-users_db = {
-    "bob@bob.com": {"email": "bob@bob.com", "password": "mySuperPwd"},
-}
-
 active_sessions = {}
 
 
@@ -42,13 +38,10 @@ def login():
     user_email = data["email"]
     user_password = data["password"]
 
-    user = users_db.get(user_email)
+    user = AUTH.login_user(user_email, user_password)
 
-    if user is None or user["password"] != user_password:
+    if user is None:
         return abort(401)
-
-    session_id = str(uuid.uuid4())
-    active_sessions[session_id] = user
 
     return jsonify({"email": user_email, "message": "logged in"}), 200
 
