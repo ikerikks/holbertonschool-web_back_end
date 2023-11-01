@@ -1,9 +1,10 @@
+#/usr/bin/env python3
+""" Flask app"""
 from flask import Flask
 from flask_babel import Babel
 
 app = Flask(__name__)
 
-# Instantiate the Babel object and configure it
 babel = Babel(app)
 
 class Config:
