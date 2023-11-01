@@ -10,6 +10,7 @@ babel = Babel(app)
 
 @app.route('/')
 def index():
+    """Returns html"""
     return '<title>Welcome to Holberton</title>'
 
 
