@@ -6,7 +6,6 @@ import os
 
 app = Flask(__name__)
 
-# Instantiate the Babel object and configure it
 babel = Babel(app)
 
 
@@ -29,7 +28,7 @@ def get_locale():
 @app.route('/')
 def index():
     """Returns html"""
-    return render_template('index.html', title=_('home_title'),
+    return render_template('3-index.html', title=_('home_title'),
                            header=_('home_header'))
 
 
