@@ -2,7 +2,7 @@
 """ redis basic"""
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable
 
 
 class Cache:
@@ -19,3 +19,17 @@ class Cache:
             return key
         else:
             raise ValueError("Data must be a string, bytes, int, or float.")
+
+    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int]:
+        data = self._redis.get(key)
+        if data is not None:
+            if fn is not None:
+                return fn(data)
+            return data
+        return None
+
+    def get_str(self, key: str) -> Union[str, bytes, int]:
+        return self.get(key, fn=lambda data: data.decode("utf-8"))
+
+    def get_int(self, key: str) -> Union[str, bytes, int]:
+        return self.get(key, fn=int)
