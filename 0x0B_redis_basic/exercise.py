@@ -6,12 +6,23 @@ from typing import Union, Callable
 import functools
 
 
+def count_calls(method: Callable) -> Callable:
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        key = method.__qualname__
+        count = self._redis.incr(key)
+        result = method(self, *args, **kwargs)
+        return result
+    return wrapper
+
+
 class Cache:
     """ Cache"""
     def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Store data"""
         key = str(uuid.uuid4())
@@ -35,13 +46,5 @@ class Cache:
     def get_int(self, key: str) -> Union[str, bytes, int]:
         return self.get(key, fn=int)
 
-def count_calls(method: Callable) -> Callable:
-    @functools.wraps(method)
-    def wrapper(self, *args, **kwargs):
-        key = method.__qualname__
-        count = self._redis.incr(key)
-        result = method(self, *args, **kwargs)
-        return result
-    return wrapper
 
 Cache.store = count_calls(Cache.store)
