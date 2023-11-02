@@ -33,6 +33,7 @@ class Cache:
             raise ValueError("Data must be a string, bytes, int, or float.")
 
     def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int]:
+        """ Get data from cache"""
         data = self._redis.get(key)
         if data is not None:
             if fn is not None:
@@ -41,9 +42,11 @@ class Cache:
         return None
 
     def get_str(self, key: str) -> Union[str, bytes, int]:
+        """ Get str data """
         return self.get(key, fn=lambda data: data.decode("utf-8"))
 
     def get_int(self, key: str) -> Union[str, bytes, int]:
+        """ Get int data """
         return self.get(key, fn=int)
 
 
