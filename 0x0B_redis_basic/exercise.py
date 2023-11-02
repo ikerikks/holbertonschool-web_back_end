@@ -7,6 +7,7 @@ import functools
 
 
 def count_calls(method: Callable) -> Callable:
+    """ count calls"""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         key = method.__qualname__
@@ -22,7 +23,6 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Store data"""
         key = str(uuid.uuid4())
@@ -62,30 +62,30 @@ def call_history(method: Callable) -> Callable:
 
 def replay(func: Callable) -> None:
     cache = Cache()
-
-    keys = cache._redis.keys(f"{func.__qualname__}:*")
+    key_pattern = f"{func.__qualname__}:*"
+    keys = cache._redis.keys(key_pattern)
 
     if not keys:
         print(f"{func.__qualname__} was not called.")
         return
 
-    inputs = []
-    outputs = []
+    calls = []
 
     for key in keys:
         inputs_key = f"{key}:inputs"
         outputs_key = f"{key}:outputs"
 
-        inputs.extend(cache._redis.lrange(inputs_key, 0, -1))
-        outputs.extend(cache._redis.lrange(outputs_key, 0, -1))
+        inputs = cache._redis.lrange(inputs_key, 0, -1)
+        outputs = cache._redis.lrange(outputs_key, 0, -1)
 
-    inputs = [eval(input_data.decode('utf-8')) for input_data in inputs]
-    outputs = [output.decode('utf-8') for output in outputs]
+        for input_data, output in zip(inputs, outputs):
+            calls.append((input_data, output))
 
-    print(f"{func.__qualname__} was called {len(keys)} times:")
+    print(f"{func.__qualname__} was called {len(calls)} times:")
 
-    for i, (input_data, output) in enumerate(zip(inputs, outputs), 1):
-        print(f"{func.__qualname__}(*{input_data}) -> {output}")
+    for i, (input_data, output) in enumerate(calls, 1):
+        input_str = input_data.decode("utf-8")
+        print(f"{func.__qualname__}(*{input_str}) -> {output.decode('utf-8')}")
 
 
 Cache.store = count_calls(Cache.store)
