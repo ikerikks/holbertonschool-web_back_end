@@ -7,9 +7,14 @@ import functools
 
 
 def count_calls(method: Callable) -> Callable:
+    call_count = {}
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
-        key = method.__qualname__
+        key = method.__qualname__ + '_count'
+        # if key not in call_count:
+        #     call_count[key] = 0
+        # call_count[key] += 1
+        # count = call_count[key]
         count = self._redis.incr(key)
         result = method(self, *args, **kwargs)
         return result
@@ -46,5 +51,19 @@ class Cache:
     def get_int(self, key: str) -> Union[str, bytes, int]:
         return self.get(key, fn=int)
 
+    
+def call_history(method: Callable) -> Callable:
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        inputs_key = f"{method.__qualname__}:inputs"
+        outputs_key = f"{method.__qualname__}:outputs"
+        input_args = str(args)
+        self._redis.rpush(inputs_key, input_args)
+        output = method(self, *args, **kwargs)
+        self._redis.rpush(outputs_key, output)
+        return output
+    return wrapper
 
-Cache.store = count_calls(Cache.store)
+Cache.store = call_history(Cache.store)
+
+
