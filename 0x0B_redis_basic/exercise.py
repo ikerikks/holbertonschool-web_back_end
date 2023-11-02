@@ -51,6 +51,7 @@ class Cache:
 
 
 def call_history(method: Callable) -> Callable:
+    """ Call"""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         inputs_key = f"{method.__qualname__}:inputs"
@@ -64,6 +65,7 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(func: Callable) -> None:
+    """ Replay"""
     cache = Cache()
     key_pattern = f"{func.__qualname__}:*"
     keys = cache._redis.keys(key_pattern)
