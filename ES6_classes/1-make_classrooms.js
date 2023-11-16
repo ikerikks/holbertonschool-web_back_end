@@ -1,5 +1,5 @@
-import ClassRoom from "./0-classroom";
+import ClassRoom from './0-classroom';
 
-export default ClassRoom.initializeRooms = function() {
-  return [new ClassRoom(19), new ClassRoom(24), new ClassRoom(34)];
-}
+export default ClassRoom.initializeRooms =  () => {
+  return [new ClassRoom(19), new ClassRoom(20), new ClassRoom(34)];
+};
