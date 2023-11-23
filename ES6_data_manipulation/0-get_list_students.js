@@ -1,10 +1,9 @@
-
-const student = (id, firstName, location) => {
+function student(id, firstName, location) {
   return {
-    'id': id,
-    'firstName': firstName,
-    'location': location,
-  }
+    id: id,
+    firstName: firstName,
+    location: location,
+  };
 }
 
 export default function getListStudent() {
