@@ -6,7 +6,7 @@ function student(id, firstName, location) {
   };
 }
 
-export default function getListStudent() {
+export default function getListStudents() {
   return [
     student(1, 'Guillaume', 'San Francisco'),
     student(2, 'James', 'Columbia'),
