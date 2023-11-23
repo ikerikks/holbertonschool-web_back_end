@@ -1,8 +1,8 @@
 function student(id, firstName, location) {
   return {
-    id: id,
-    firstName: firstName,
-    location: location,
+    id,
+    firstName,
+    location,
   };
 }
 
