@@ -8,5 +8,3 @@ export default function updateStudentGradeByCity(studentsList, city, newGrades) 
         grade: matchedGrade ? matchedGrade.grade : 'N/A',
       };
     });
-  }
-      
