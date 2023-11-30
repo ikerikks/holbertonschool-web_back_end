@@ -12,7 +12,7 @@ function countStudents(path) {
     console.log(
       `Number of students in CS: ${studentsCS.length}. `
       + `List: ${studentsCS.map((val) => val[0]).join(', ')}`,
-      );
+    );
     console.log(
       `Number of students in SWE: ${studentsSWE.length}. `
       + `List: ${studentsSWE.map((val) => val[0]).join(', ')}`,
