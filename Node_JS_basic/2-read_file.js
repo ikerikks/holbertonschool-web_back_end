@@ -1,7 +1,8 @@
 const fs = require('fs');
 function countStudents(path) {
   try {
-    let data = fs.readFileSync(`${path}`, 'utf-8').split('\n');
+    let data = fs.readFileSync(`${path}`, 'utf-8').trim().split('\n');
+    // console.log(data);
     data.shift();
     let studentsCS = data.filter(val => val.includes('CS')).map((student) => student.split(','));
     let studentsSWE = data.filter(val => val.includes('SWE')).map((student) => student.split(','));
