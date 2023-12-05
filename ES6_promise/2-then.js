@@ -1,12 +1,12 @@
 export default function handleResponseFromAPI(promise) {
-  promise
-    .then((data) => {
+  return promise
+    .then(() => {
       return {
         status: 200,
         body: 'success'
       };
     })
-    .catch((err) => {
+    .catch(() => {
       return new Error();
     })
     .finally((data) => {
