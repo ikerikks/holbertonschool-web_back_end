@@ -10,6 +10,6 @@ export default function handleResponseFromAPI(promise) {
       return new Error();
     })
     .finally((data) => {
-      console.log('Got a respponse from the API');
+      console.log('Got a response from the API');
     })
 }
