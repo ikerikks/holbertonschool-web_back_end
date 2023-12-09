@@ -1,15 +1,14 @@
-import * as util from './utils.js';
+// 3-all.js
+import { uploadPhoto, createUser } from './utils.js   ';
+
 export default function handleProfileSignup() {
-  const promise1 = util.uploadPhoto()
-  const promise2 = util.createUser()
-  Promise.all([promise1, promise2])
-    .then((data) => {
-      const newData = {};
-      data.forEach((obj) => Object.assign(newData, obj));
-      let result = Object.values(newData)
-        .filter((val) => typeof val != 'number' )
-        .join(' ');
-      console.log(result);
+  Promise.all([uploadPhoto(), createUser()])
+    .then(([photoData, userData]) => {
+      const { firstName } = userData;
+      const { lastName } = userData;
+      console.log(`${photoData.body} ${firstName} ${lastName}`);
     })
-    .catch((err) => console.log('Signup system offline'))
+    .catch(() => {
+      console.log('Signup system offline');
+    });
 }
