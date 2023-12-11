@@ -1,11 +1,11 @@
 export default function guardrail(mathFunction) {
-  let queue = ['Guardrail was processed'];
+  const queue = ['Guardrail was processed'];
   let message = '';
 
   try {
     message = mathFunction();
   } catch (err) {
-    message = err;
+    message = String(err);
   }
 
   queue.unshift(message);
