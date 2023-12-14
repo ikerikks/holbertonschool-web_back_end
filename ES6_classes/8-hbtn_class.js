@@ -7,7 +7,8 @@ export default class HolbertonClass {
   [Symbol.toPrimitive](hint) {
     if (hint === 'number') {
       return this._size;
-    } else if (hint === 'string') {
+    }
+    if (hint === 'string') {
       return this._location;
     }
     return null;
