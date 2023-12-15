@@ -28,7 +28,7 @@ async function countStudents(path) {
         + `List: ${studentsSWE.map((val) => val[0]).join(', ')}`,
       );
     })
-    .catch((err) => {
+    .catch(() => {
       throw new Error('Cannot load the database');
     });
   return promesa;
