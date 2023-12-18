@@ -1,7 +1,7 @@
 export default class Building {
   constructor(sqft) {
-    if (!(this.constructor === Building)) {
-      throw new Error('Class extending Building must override evacuationWarningMessage');
+    if (this.constructor === Building) {
+      throw new Error("Abstract class 'Building' cannot be instantiated.");
     }
     this._sqft = sqft;
   }
@@ -9,6 +9,6 @@ export default class Building {
   get sqft() { return this._sqft; }
 
   evacuationWarningMessage() {
-    console.log('Everyone out', this);
+    throw new Error('Class extending Building must override evacuationWarningMessage');
   }
 }
