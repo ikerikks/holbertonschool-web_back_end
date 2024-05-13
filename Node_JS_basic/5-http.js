@@ -1,5 +1,5 @@
-import http from 'http';
-import fs from 'fs';
+const http = require('http');
+const fs = require('fs');
 
 const app = http.createServer(async (req, res) => {
   const promesa = await new Promise((resolve, reject) => {
@@ -22,31 +22,6 @@ const app = http.createServer(async (req, res) => {
     });
   });
 
-  // promesa
-  //   .then((data) => {
-  //     const strData = data.trim().split('\n');
-  //     strData.shift();
-  //     const studentsCS = strData.filter((val) => val.includes('CS')).map((student) => student.split(','));
-  //     const studentsSWE = strData.filter((val) => val.includes('SWE')).map((student) => student.split(','));
-
-  //     result =
-  //       `Number of students: ${strData.length}`
-  //       + `Number of students in CS: ${studentsCS.length}. `
-  //       + `List: ${studentsCS.map((val) => val[0]).join(', ')}`
-  //       + `Number of students in SWE: ${studentsSWE.length}. `
-  //       + `List: ${studentsSWE.map((val) => val[0]).join(', ')}`
-  //     ;
-  //     // console.log("OK FINE");
-  //     // console.log(result);
-  //   })
-  //   .catch((e) => {
-  //     // console.log("ERROR ERROR");
-  //     // console.log(e);
-  //     // console.log("------------------");
-
-  //     throw new Error('Cannot load the database');
-  //   });
-  
   switch (req.url) {
     case '/':
       res.write('Hello Holberton School!');
