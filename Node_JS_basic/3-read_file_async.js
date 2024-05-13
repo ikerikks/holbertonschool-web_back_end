@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs'; 
 
-async function countStudents(path) {
+export default async function countStudents(path) {
   const promesa = new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, res) => {
       if (err) {
@@ -14,7 +14,6 @@ async function countStudents(path) {
     .then((data) => {
       const strData = data.trim().split('\n');
       strData.shift();
-      // console.log(data);
       const studentsCS = strData.filter((val) => val.includes('CS')).map((student) => student.split(','));
       const studentsSWE = strData.filter((val) => val.includes('SWE')).map((student) => student.split(','));
 
@@ -33,5 +32,3 @@ async function countStudents(path) {
     });
   return promesa;
 }
-
-module.exports = countStudents;
