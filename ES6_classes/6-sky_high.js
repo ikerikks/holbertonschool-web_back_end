@@ -14,11 +14,10 @@ class SkyHighBuilding extends Building {
     return this._floors;
   }
 
-  // super.evacuationWarningMessage() {
-  //   return `Evacuate slowly the ${this.floors} floors`;
-  // })
-  evacuationWarningMessage = ()=> `Evacuate slowly the ${this.floors} floors`;
-
+  evacuationWarningMessage() {
+    return `Evacuate slowly the ${this._floors} floors`;
+  }
+  
 }
 
 export default SkyHighBuilding;
