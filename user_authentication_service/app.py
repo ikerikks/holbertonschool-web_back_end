@@ -13,57 +13,102 @@ AUTH = Auth()
 db = DB()
 
 
-@app.route("/users", methods=["POST"])
-def register_user():
+@app.route('/')
+def hello_world():
+    '''Main
+    '''
+    return jsonify(message='Bienvenue')
+
+
+@app.route('/users', methods=['POST'], strict_slashes=False)
+def users():
+    email = request.form.get('email')
+    password = request.form.get('password')
     try:
-        email = request.form.get("email")
-        password = request.form.get("password")
+        AUTH.register_user(email=email, password=password)
+        return jsonify(email=email, message='user created')
+    except ValueError:
+        return jsonify(message='email already registered'), 400
 
-        user = AUTH.register_user(email, password)
 
-        response = {"email": user.email, "message": "user created"}
-        return jsonify(response)
-    except ValueError as err:
-        response = {"message": "email already registered"}
-        return jsonify(response)
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login() -> str:
+    ''' POST on session
+    '''
+    email: str = request.form.get('email')
+    password: str = request.form.get('password')
+    if not email or not password:
+        return abort(401)
 
-@app.route("/sessions", methods=["POST"])
-def login():
-    email = request.form.get("email")
-    password = request.form.get("password")
-
-    try:
-        user = db.find_user_by(email=email)
-
-        if user.hashed_password != password:
-            abort(401)
-
-        session_id = db.create_session(user.email)
-
-        response = make_response(jsonify({"email": user.email, "message": "logged in"}))
-        response.set_cookie("session_id", session_id)
-
-        return response
-
-    except NoResultFound:
+    check: bool = AUTH.valid_login(email=email, password=password)
+    if not check:
         abort(401)
-    
-@app.route('/sessions', methods=['DELETE'])
+
+    session_id: str = AUTH.create_session(email=email)
+    res = jsonify(email=email, message='logged in')
+    res.set_cookie('session_id', session_id)
+    return res
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
-    session_id = request.cookies.get('session_id')
-    
-    if not session_id:
+    '''Find the user with the requested session ID.
+    If the user exists destroy the session and redirect the user to GET
+    '''
+    id = request.cookies.get('session_id')
+    if id is None:
         abort(403)
-    
+
     try:
-        db.delete_session(session_id)
-        
-        return redirect('/')
-    
+        user = AUTH.get_user_from_session_id(id)
+        AUTH.destroy_session(user_id=user.id)
+        return redirect("/", 302)
     except NoResultFound:
         abort(403)
 
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile():
+    '''
+    '''
+    id = request.cookies.get('session_id')
+    if id is None:
+        abort(403)
+    try:
+        user = AUTH.get_user_from_session_id(id)
+        return jsonify({"email": user.email})
+    except NoResultFound:
+        abort(403)
+
+
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token():
+    '''
+    '''
+    email: str = request.form.get('email')
+    if not email:
+        abort(403)
+    try:
+        token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": token}), 200
+    except Exception:
+        abort(403)
+
+
+@app.route('./reset_password', methods=['GET'], strict_slashes=False)
+def update_password():
+    '''
+    '''
+    email: str = request.form.get('email')
+    reset_token: str = request.form.get('reset_token')
+    new_password: str = request.form.get('new_password')
+
+    try:
+        AUTH.update_password(reset_token=reset_token, password=new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
+    except Exception:
+        abort(403)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port="5000")
