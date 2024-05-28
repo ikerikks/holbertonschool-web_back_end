@@ -60,7 +60,7 @@ def logout():
         user = AUTH.get_user_from_session_id(id)
         AUTH.destroy_session(user_id=user.id)
         return redirect("/", 302)
-    except NoResultFound:
+    except:
         abort(403)
 
 
@@ -74,7 +74,7 @@ def profile():
     try:
         user = AUTH.get_user_from_session_id(id)
         return jsonify({"email": user.email})
-    except NoResultFound:
+    except:
         abort(403)
 
 
@@ -101,7 +101,7 @@ def update_password():
     new_password: str = request.form.get('new_password')
 
     try:
-        AUTH.update_password(reset_token=reset_password, password=new_password)
+        AUTH.update_password(reset_token=get_reset_password_token, password=new_password)
         return jsonify({"email": email, "message": "Password updated"}), 200
     except Exception:
         abort(403)
