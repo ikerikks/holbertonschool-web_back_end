@@ -6,6 +6,4 @@
     "test": "mocha"
   },
   "type": "module"
-  
-  
 }
