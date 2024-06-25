@@ -17,3 +17,4 @@ export function calculateNumber(type, a, b) {
   return result == Infinity || isNaN(result)?
     'Error': result;
 }
+
