@@ -1,4 +1,4 @@
-function calculateNumber(type, a, b) {
+export function calculateNumber(type, a, b) {
   let result = '';
   switch(type) {
     case 'SUM':
