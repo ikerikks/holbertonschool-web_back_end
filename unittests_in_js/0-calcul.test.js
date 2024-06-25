@@ -1,5 +1,3 @@
-// import assert from 'node:assert';
-const { assert } = require('node:assert');
 const { calculateNumber } = require('./0-calcul.js');
 
 describe('calculateNumber', () => {
