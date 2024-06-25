@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 import { calculateNumber } from ('./0-calcul.js');
 
 describe('calculateNumber', () => {
