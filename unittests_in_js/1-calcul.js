@@ -1,4 +1,4 @@
-export function calculateNumber(type, a, b) {
+function calculateNumber(type, a, b) {
   let result = '';
   switch(type) {
     case 'SUM':
@@ -17,4 +17,5 @@ export function calculateNumber(type, a, b) {
   return result == Infinity || isNaN(result)?
     'Error': result;
 }
+module.exports = { calculateNumber };
 
