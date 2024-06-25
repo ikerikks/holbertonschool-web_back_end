@@ -1,4 +1,4 @@
-import { calculateNumber } from './0-calcul.js';
+const { calculateNumber } = require('./0-calcul.js');
 
 describe('calculateNumber', () => {
   it('should return the sum of an operation', () => {
