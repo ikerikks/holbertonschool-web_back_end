@@ -2,6 +2,7 @@
   "dependencies": {
     "mocha": "^10.4.0"
   },
+  "type": "module",
   "scripts": {
     "test": "mocha"
   }
