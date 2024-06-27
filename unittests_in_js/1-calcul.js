@@ -14,6 +14,9 @@ function calculateNumber(type, a, b) {
     case 'DIVIDE':
       return arg2 !== 0? arg1 / arg2: 'Error' ;
     break;
+
+    default: 
+    return Error('Parameter type erroned!');
   }
 }
 
