@@ -1,21 +1,20 @@
 function calculateNumber(type, a, b) {
-  let result = '';
+  arg1 = Math.round(a);
+  arg2 = Math.round(b); 
+
   switch(type) {
     case 'SUM':
-      result = Math.ceil(a + b);
+      return (arg1 + arg2);
     break;
 
     case 'SUBTRACT':
-      result = ((a - b) >= 0 || -1) * 
-      Math.ceil(Math.abs(a - b));
+      return(arg1 - arg2);
     break;
     
     case 'DIVIDE':
-      result = Math.round((a / b) * 10) / 10 ;
+      return arg2 !== 0? arg1 / arg2: 'Error' ;
     break;
   }
-  return result == Infinity || isNaN(result)?
-    'Error': result;
 }
-module.exports = { calculateNumber };
 
+module.exports = { calculateNumber };

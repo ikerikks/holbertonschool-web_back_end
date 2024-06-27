@@ -9,7 +9,7 @@ describe('calculateNumber', () => {
     assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
   });
   it('return a division', () => {
-    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.3);
+    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
   });
   it('return an error', () => {
     assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
