@@ -3,15 +3,17 @@
 -- or returns 0 if the second number is equal to 0.
 DELIMITER //
 
-CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS DECIMAL(10, 6)
+CREATE FUNCTION SafeDiv(a INT, b INT) 
+RETURNS FLOAT
 DETERMINISTIC
 BEGIN
+    DECLARE result FLOAT;
     IF b = 0 THEN
-        RETURN 0.000000;
+        SET result = 0;
     ELSE
-        RETURN a / b;
+        SET result = a / b;
     END IF;
+    RETURN result;
 END //
 
 DELIMITER ;
