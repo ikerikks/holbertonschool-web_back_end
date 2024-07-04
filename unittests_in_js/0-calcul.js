@@ -3,5 +3,5 @@ const calculateNumber = (a, b) =>  {
   arg2 = Math.round(Math.abs(b)) * Math.sign(b);
   return arg1 + arg2;
 }
-module.exports = { calculateNumber };
+module.exports = calculateNumber;
 
