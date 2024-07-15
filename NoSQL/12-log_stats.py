@@ -21,31 +21,3 @@ if __name__ == "__main__":
     count_status = collection.count_documents({"method": "GET",
                                                "path": "/status"})
     print("{} status check".format(count_status))
-
-
-# def log_stats():
-#     """provides some stats about Nginx logs"""
-#     # Connect to MongoDB
-#     client = MongoClient('mongodb://localhost:27017/')
-#     db = client.logs
-#     collection = db.nginx
-
-#     # Number of documents in the collection
-#     log_count = collection.count_documents({})
-
-#     # Methods count
-#     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-#     method_counts = {method: collection.count_documents({"method": method}) for method in methods}
-
-#     # GET requests with path /status
-#     status_check_count = collection.count_documents({"method": "GET", "path": "/status"})
-
-#     # Print results
-#     print(f"{log_count} logs")
-#     print("Methods:")
-#     for method in methods:
-#         print(f"\tmethod {method}: {method_counts[method]}")
-#     print(f"{status_check_count} status check")
-
-# if __name__ == "__main__":
-#     log_stats()
