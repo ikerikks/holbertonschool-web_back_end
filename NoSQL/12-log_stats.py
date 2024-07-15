@@ -24,6 +24,7 @@ from pymongo import MongoClient
 
 
 def log_stats():
+    """provides some stats about Nginx logs"""
     # Connect to MongoDB
     client = MongoClient('mongodb://localhost:27017/')
     db = client.logs
