@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """change topics"""
+from pymongo import MongoClient
 
 
 def update_topics(mongo_collection, name, topics):
