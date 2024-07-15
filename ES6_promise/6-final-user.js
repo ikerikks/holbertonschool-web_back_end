@@ -1,5 +1,5 @@
-import signUpUser from './4-user-promise';
-import uploadPhoto from './5-photo-reject';
+import signUpUser from './4-user-promise.js';
+import uploadPhoto from './5-photo-reject.js';
 
 export default function handleProfileSignup(firstName, lastName, fileName) {
   const promise1 = signUpUser(firstName, lastName);
@@ -10,4 +10,3 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
     .then((values) => values
       .map((v) => ({ status: v.status, value: v.status === 'fulfilled' ? v.value : `${v.reason.name}: ${v.reason.message}` })));
 }
-
