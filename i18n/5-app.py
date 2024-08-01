@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""module application"""
+""" Basic Flask app Module
+"""
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
+
 app = Flask(__name__)
 babel = Babel(app)
-
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -16,45 +17,51 @@ users = {
 }
 
 
-@app.before_request
-def before_request():
-    """define g.user to send to template"""
-    g.user = get_user()
-
-
-class Config(object):
-    """configuration language"""
+class Config:
+    """ Configuration class.
+    """
     LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = "en"
-    BABEL_DEFAULT_TIMEZONE = "UTC"
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
 app.config.from_object(Config)
-babel.init_app(app)
 
 
-@babel.localeselector
-def get_locale():
-    """define the best language"""
-    locale = request.args.get('locale')
-    if locale:
-        return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-@app.route('/', methods=["GET"])
-def hello():
-    """print hello world"""
+@app.route('/', methods=['GET'], strict_slashes=False)
+def welcome() -> str:
+    """Endpoint returning Hello world.
+    """
     return render_template("5-index.html")
 
 
+@babel.localeselector
+def get_locale() -> str:
+    """Select the best match language."""
+
+    requested_locale = request.args.get('locale')
+    if requested_locale in app.config['LANGUAGES']:
+        return requested_locale
+
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
 def get_user():
-    """find a user in users dict or use locale information"""
-    login = request.args.get('login_as')
-    if login:
-        return users.get(int(login))
+    """Returns a user by their ID or None.
+    """
+    user_id = request.args.get('login_as')
+    if user_id:
+        user_id = int(user_id)
+        return users.get(user_id)
     return None
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+@app.before_request
+def before_request():
+    """"Sets the global user before each request.
+    """
+    g.user = get_user()
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
