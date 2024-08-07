@@ -1,36 +1,31 @@
 const http = require('http');
-const fs = require('fs');
+const students = require('./3-read_file_async');
 
-const app = http.createServer(async (req, res) => {
-  const promesa = await new Promise((resolve, reject) => {
-    fs.readFile(process.argv[2], 'utf-8', (err, res) => {
-      if (err) {
-        reject(err);
-      }
-      const strData = res.trim().split('\n');
-      strData.shift();
-      const studentsCS = strData.filter((val) => val.includes('CS')).map((student) => student.split(','));
-      const studentsSWE = strData.filter((val) => val.includes('SWE')).map((student) => student.split(','));
-      let result =
-        `Number of students: ${strData.length}\n`
-        + `Number of students in CS: ${studentsCS.length}. `
-        + `List: ${studentsCS.map((val) => val[0]).join(', ')}\n`
-        + `Number of students in SWE: ${studentsSWE.length}. `
-        + `List: ${studentsSWE.map((val) => val[0]).join(', ')}`
-      ;
-      resolve(result);
-    });
-  });
+const port = 1245;
 
+const app = http.createServer((req, res) => {
   switch (req.url) {
     case '/':
-      res.write('Hello Holberton School!');
+      res.writeHead(200);
+      res.end('Hello Holberton School!');
       break;
     case '/students':
-      res.write('This is the list of our students\n' + promesa);
-      
+      res.writeHead(200);
+      res.write('This is the list of our students\n');
+      students(process.argv[2])
+        .then((data) => {
+          res.end(data);
+        })
+        .catch((error) => {
+          res.end(error.message);
+        });
+      break;
+    default:
+      res.writeHead(404);
+      res.end(JSON.stringify({ error: 'Resource not found' }));
   }
+});
 
-  res.end();
-}).listen(1245);
+app.listen(port);
 
+module.exports = app;
