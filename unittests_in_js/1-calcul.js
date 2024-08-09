@@ -1,22 +1,19 @@
 function calculateNumber(type, a, b) {
   arg1 = Math.round(a);
-  arg2 = Math.round(b); 
+  arg2 = Math.round(b);
 
-  switch(type) {
+  switch (type) {
     case 'SUM':
       return (arg1 + arg2);
-    break;
 
     case 'SUBTRACT':
-      return(arg1 - arg2);
-    break;
-    
-    case 'DIVIDE':
-      return arg2 !== 0? arg1 / arg2: 'Error';
-    break;
+      return (arg1 - arg2);
 
-    default: 
-    return Error('Parameter type erroned!');
+    case 'DIVIDE':
+      return arg2 !== 0 ? arg1 / arg2 : 'Error';
+
+    default:
+      return Error('Parameter type erroned!');
   }
 }
 
