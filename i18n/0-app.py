@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Basic Flask app Module
-"""
+"""Basic Flask app Module."""
 
 from flask import Flask, render_template
 
@@ -10,8 +9,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'], strict_slashes=False)
 def welcome() -> str:
-    """Endpoint returning Hello world.
-    """
+    """Endpoint returning Hello world."""
     return render_template("0-index.html")
 
 
