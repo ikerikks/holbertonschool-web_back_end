@@ -30,8 +30,8 @@ def welcome() -> str:
 
 @babel.localeselector
 def get_locale() -> str:
-    """Select the best match language."""
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    """Select the best match language or use the one specified in URL."""
+    return request.args.get('lang') or request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 if __name__ == "__main__":
