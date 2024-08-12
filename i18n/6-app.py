@@ -35,7 +35,6 @@ def welcome() -> str:
     return render_template("6-index.html")
 
 
-@babel.localeselector
 def get_locale() -> str:
     """Select the best match language based on priority:
     URL param, user settings, request header, default.
