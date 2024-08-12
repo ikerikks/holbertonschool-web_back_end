@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Basic Flask app Module
-"""
+"""module application"""
 
 from flask import Flask, render_template, request
 from flask_babel import Babel
@@ -11,9 +10,9 @@ babel = Babel(app)
 
 
 class Config:
-    """ Configuration class.
+    """Configuration module
     """
-    LANGUAGES = ["en", "fr"]
+    LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
@@ -21,22 +20,21 @@ class Config:
 app.config.from_object(Config)
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
-def welcome() -> str:
-    """Endpoint returning Hello world.
+@app.route('/')
+def index():
+    """Generate template
     """
-    return render_template("4-index.html")
+    return render_template('3-index.html')
 
 
-def get_locale() -> str:
-    """Select the best match language."""
-
-    requested_locale = request.args.get('locale')
-    if requested_locale in app.config['LANGUAGES']:
-        return requested_locale
-
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+def get_locale():
+    """define the best language or use locale information"""
+    
+    locale = request.args.get('locale')
+    if locale in Config.LANGUAGES:
+        return locale
+    return request.accept_languages.best_match('LANGUAGES')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port="8001")
