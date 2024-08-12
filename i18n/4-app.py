@@ -1,42 +1,38 @@
 #!/usr/bin/env python3
-""" Basic Flask app Module
 """
-
-from flask import Flask, render_template, request
-from flask_babel import Babel
+Basic Flask app Module.
+"""
+from flask import Flask, request, g
+from flask_babel import Babel, _
 
 
 app = Flask(__name__)
 babel = Babel(app)
 
 
-class Config:
-    """ Configuration class.
-    """
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+LANGUAGES = {
+    'en': 'English',
+    'fr': 'French'
+}
 
 
-app.config.from_object(Config)
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_SUPPORTED_LOCALES'] = LANGUAGES.keys()
+
+@babel.localeselector
+def get_locale():
+
+    locale_param = request.args.get('locale')
+    if locale_param in LANGUAGES:
+        return locale_param
+
+    return request.accept_languages.best_match(app.config['BABEL_SUPPORTED_LOCALES'])
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
-def welcome() -> str:
-    """Endpoint returning Hello world.
-    """
-    return render_template("4-index.html")
+@app.route('/')
+def index():
+    return _("Hello, World!")
 
 
-def get_locale() -> str:
-    """Select the best match language."""
-
-    requested_locale = request.args.get('locale')
-    if requested_locale in app.config['LANGUAGES']:
-        return requested_locale
-
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)
