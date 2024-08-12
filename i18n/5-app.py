@@ -35,7 +35,6 @@ def welcome() -> str:
     return render_template("5-index.html")
 
 
-@babel.localeselector
 def get_locale() -> str:
     """Select the best match language."""
 
