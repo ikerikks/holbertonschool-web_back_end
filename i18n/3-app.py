@@ -25,7 +25,7 @@ app.config.from_object(Config)
 def welcome() -> str:
     """Endpoint returning Hello world.
     """
-    return render_template("3-index.html")
+    return render_template("./templates/3-index.html")
 
 
 @babel.localeselector
