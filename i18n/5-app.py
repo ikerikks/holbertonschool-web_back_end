@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-""" Basic Flask app Module
+"""Main app
 """
-
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
-
 app = Flask(__name__)
 babel = Babel(app)
-
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -18,9 +15,9 @@ users = {
 
 
 class Config:
-    """ Configuration class.
+    """Configuration module
     """
-    LANGUAGES = ["en", "fr"]
+    LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
@@ -28,39 +25,46 @@ class Config:
 app.config.from_object(Config)
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
-def welcome() -> str:
-    """Endpoint returning Hello world.
+@babel.localeselector
+def get_locale():
     """
-    return render_template("5-index.html")
-
-
-def get_locale() -> str:
-    """Select the best match language."""
-
-    requested_locale = request.args.get('locale')
-    if requested_locale in app.config['LANGUAGES']:
-        return requested_locale
-
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    """
+    locale = request.args.get('locale')
+    if locale in Config.LANGUAGES:
+        return locale
+    return request.accept_languages.best_match('LANGUAGES')
 
 
 def get_user():
-    """Returns a user by their ID or None.
     """
-    user_id = request.args.get('login_as')
-    if user_id:
-        user_id = int(user_id)
-        return users.get(user_id)
-    return None
+    """
+    try:
+        user_nb = int(request.args.get('login_as'))
+        if user_nb in users.keys() and user_nb is not None:
+            return users[user_nb]
+    except Exception:
+        return None
 
 
 @app.before_request
 def before_request():
-    """"Sets the global user before each request.
     """
-    g.user = get_user()
+    """
+    user = get_user()
+    if user:
+        g.user = user
+
+
+@app.route('/')
+def index():
+    """Generate template
+    """
+    try:
+        username = g.user['name']
+    except Exception:
+        username = None
+    return render_template('5-index.html', username=username)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port="8001")
