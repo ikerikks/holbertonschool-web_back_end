@@ -4,37 +4,23 @@
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
-
 app = Flask(__name__)
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'fr']
+
 babel = Babel(app)
 
-
-class Config:
-    """Configuration module
-    """
-    LANGUAGES = ['en', 'fr']
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
-
-
-app.config.from_object(Config)
-
+@babel.localeselector
+def get_locale():
+    locale = request.args.get('locale')
+    if locale and locale in app.config['BABEL_SUPPORTED_LOCALES']:
+        return locale
+    
+    return request.accept_languages.best_match(app.config['BABEL_SUPPORTED_LOCALES'])
 
 @app.route('/')
 def index():
-    """Generate template
-    """
     return render_template('4-index.html')
 
-
-def get_locale():
-    """define the best language or use locale information"""
-    
-    locale = request.args.get('locale')
-    if locale in Config.LANGUAGES:
-        return locale
-    return request.accept_languages.best_match('LANGUAGES')
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="8001")
+if __name__ == '__main__':
+    app.run(debug=True)
