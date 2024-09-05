@@ -7,4 +7,4 @@ process.stdin.on('readable', () => {
 });
 process.stdin.on('end', () => {
   console.log('This important software is now closing');
-})
+});
